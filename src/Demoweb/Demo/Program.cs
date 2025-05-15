@@ -72,6 +72,11 @@ try
 
     #endregion
 
+    #region Automapper Configuration
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    #endregion
+
 
 
 

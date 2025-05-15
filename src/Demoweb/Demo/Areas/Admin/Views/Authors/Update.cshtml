@@ -1,9 +1,8 @@
-﻿@model AddAuthorModel
+﻿@model UpdateAuthorModel
 
 @{
     ViewData["Title"] = "Add Author";
 }
-
 
 <!--begin::App Content Header-->
 <div class="app-content-header">
@@ -11,11 +10,11 @@
     <div class="container-fluid">
         <!--begin::Row-->
         <div class="row">
-            <div class="col-sm-6"><h3 class="mb-0">Add Auhtor</h3></div>
+            <div class="col-sm-6"><h3 class="mb-0">Update Author</h3></div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Atuhor</li>
+                    <li class="breadcrumb-item active" aria-current="page">Update Author</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +32,6 @@
             <!--begin::Col-->
             <div class="col-12">
                 <partial name="_ResponsePartial" />
-         
             </div>
             <!--end::Col-->
             <!--begin::Col-->
@@ -41,28 +39,26 @@
                 <!--begin::Quick Example-->
                 <div class="card card-primary card-outline mb-4">
                     <!--begin::Header-->
-                    <div class="card-header"><div class="card-title">Add Author</div></div>
+                    <div class="card-header"><div class="card-title">Update author</div></div>
                     <!--end::Header-->
                     <!--begin::Form-->
-                    <form asp-antiforgery="true" asp-area="Admin" asp-controller="Authors" asp-action="Add" method="post">
+                    <form asp-antiforgery="true" asp-area="Admin" asp-controller="Authors"
+                          asp-action="Update" method="post">
                         <!--begin::Body-->
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="card-body">
                             <div class="mb-3">
+                                <input type="hidden" asp-for="Id" />
                                 <label asp-for="Name" class="form-label">Author Name</label>
                                 <input type="text"
                                        class="form-control"
                                        asp-for="Name"
                                        aria-describedby="nameHelp" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                                <div id="TitleHelp" class="form-text">
-                                    Provied a Friendly Name
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <div id="nameHelp" class="form-text">
+                                    Provide a friendly name
                                 </div>
                             </div>
-                         
-
-                        </div>
-                        <div class="card-body">
                             <div class="mb-3">
                                 <label asp-for="Biography" class="form-label">Author Biography</label>
                                 <input type="text"
@@ -70,36 +66,22 @@
                                        asp-for="Biography"
                                        aria-describedby="biographyHelp" />
                                 <span asp-validation-for="Biography" class="text-danger"></span>
-                                <div id="TitleHelp" class="form-text">
-                                    Provied a Biography
+                                <div id="biographyHelp" class="form-text">
+                                    Provide a biography
                                 </div>
                             </div>
-
-
-                        </div>
-
-
-                        <div class="card-body">
                             <div class="mb-3">
                                 <label asp-for="Rating" class="form-label">Author Rating</label>
                                 <input type="number"
                                        class="form-control"
                                        asp-for="Rating"
-                                       aria-describedby="emailHelp" />
+                                       aria-describedby="ratingHelp" />
                                 <span asp-validation-for="Rating" class="text-danger"></span>
-                                <div id="raingHelp" class="form-text">
-                                    Provied a Rating
+                                <div id="ratingHelp" class="form-text">
+                                    Provide a rating
                                 </div>
                             </div>
-
-
                         </div>
-
-
-
-
-
-
                         <!--end::Body-->
                         <!--begin::Footer-->
                         <div class="card-footer">
@@ -109,8 +91,7 @@
                     </form>
                     <!--end::Form-->
                 </div>
-
-
+                <!--end::Quick Example-->
             </div>
             <!--end::Col-->
         </div>
@@ -119,12 +100,8 @@
     <!--end::Container-->
 </div>
 <!--end::App Content-->
-
 @section Scripts
 {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
-
-
 }
-

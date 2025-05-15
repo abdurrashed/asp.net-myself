@@ -19,8 +19,6 @@ namespace Demo.Infrastructure.Repositories
             _dbContext = context;
         }
 
-    
-     
 
         public List<Book> GetLatesBooks()
         {

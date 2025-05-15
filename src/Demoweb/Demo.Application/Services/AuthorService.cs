@@ -1,4 +1,5 @@
-﻿using Demo.Domaiin;
+﻿using Demo.Application.Exceptions;
+using Demo.Domaiin;
 using Demo.Domaiin.Entities;
 using Demo.Domaiin.Services;
 using System;
@@ -20,13 +21,41 @@ namespace Demo.Application.Services
 
         public void AddAuthor(Author author)
         {
-            _applicationUnitOfWork1.AuthorRepository.Add(author);
+            if (!_applicationUnitOfWork1.AuthorRepository.IsNameDuplicate(author.Name))
+            {
+                _applicationUnitOfWork1.AuthorRepository.Add(author);
+                _applicationUnitOfWork1.Save();
+            }
+            else
+            {
+                throw new DuplicateAuthorNameException();
+            }
+          
+            
+        }
+
+        public void DeleteAuthor(Guid id)
+        {
+
+            _applicationUnitOfWork1.AuthorRepository.Remove(id);
             _applicationUnitOfWork1.Save();
+           
+        }
+
+        public Author GetAuthor(Guid id)
+        {
+            return _applicationUnitOfWork1.AuthorRepository.GetById(id);
         }
 
         public (IList<Author> data, int total, int totalDisplay) GetAuthors(int pageIndex, int pageSize, string? order, DataTablesSearch search)
         {
             return _applicationUnitOfWork1.AuthorRepository.GetPageAuthors(pageIndex, pageSize, order, search);
+        }
+
+        public void UpdateAuthor(Author author)
+        {
+            _applicationUnitOfWork1.AuthorRepository.Edit(author);
+            _applicationUnitOfWork1.Save();
         }
     }
 }
