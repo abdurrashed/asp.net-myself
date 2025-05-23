@@ -1,5 +1,6 @@
 ﻿using Demo.Application.Exceptions;
 using Demo.Domaiin;
+using Demo.Domaiin.DTOS;
 using Demo.Domaiin.Entities;
 using Demo.Domaiin.Services;
 using System;
@@ -50,6 +51,12 @@ namespace Demo.Application.Services
         public (IList<Author> data, int total, int totalDisplay) GetAuthors(int pageIndex, int pageSize, string? order, DataTablesSearch search)
         {
             return _applicationUnitOfWork1.AuthorRepository.GetPageAuthors(pageIndex, pageSize, order, search);
+        }
+
+        public async Task<(IList<Author> data, int total, int totalDisplay)> GetAuthorsSP(int pageIndex,
+             int pageSize, string? order, AuthorSearchDto search)
+        {
+            return await _applicationUnitOfWork1.GetAuthorsSP(pageIndex, pageSize, order, search);
         }
 
         public void UpdateAuthor(Author author)

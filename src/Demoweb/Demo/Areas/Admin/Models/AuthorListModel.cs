@@ -7,6 +7,7 @@ namespace Demo.Areas.Admin.Models
 {
     public class AuthorListModel : DataTables
     {
-     
+        public AuthorSearchModel SearchItem { get; set; }
+
     }
 }

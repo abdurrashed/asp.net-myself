@@ -1,4 +1,5 @@
-﻿using Demo.Domaiin.Entities;
+﻿using Demo.Domaiin.DTOS;
+using Demo.Domaiin.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Demo.Domaiin.Services
         void DeleteAuthor(Guid id);
         (IList<Author> data,int total, int totalDisplay) GetAuthors(int pageIndex, int pageSize,string? order, DataTablesSearch search);
         void UpdateAuthor(Author author);
+        Task<(IList<Author> data, int total, int totalDisplay)> GetAuthorsSP(int pageIndex, int pageSize,
+            string? order, AuthorSearchDto search);
     }
 }

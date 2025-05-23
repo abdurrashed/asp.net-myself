@@ -1,4 +1,6 @@
-﻿using Demo.Domaiin.Repositories;
+﻿using Demo.Domaiin.DTOS;
+using Demo.Domaiin.Entities;
+using Demo.Domaiin.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace Demo.Domaiin.Services
         public IBookRepository BookRepository { get; }
         public IAuthorRepository AuthorRepository { get; }
 
-
-
+        Task<(IList<Author> data, int total, int totalDisplay)> GetAuthorsSP(int pageIndex,
+                   int pageSize, string? order, AuthorSearchDto search);
     }
 }

@@ -3,6 +3,7 @@ using Demo.Application.Exceptions;
 using Demo.Application.Services;
 using Demo.Areas.Admin.Models;
 using Demo.Domaiin;
+using Demo.Domaiin.DTOS;
 using Demo.Domaiin.Entities;
 using Demo.Domaiin.Services;
 using Demo.Infrastructure;
@@ -233,53 +234,76 @@ namespace Demo.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
 
+
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        public JsonResult GetAuthorJsonData([FromBody]AuthorListModel model)
+        [HttpPost]
+        public JsonResult GetAuthorJsonData([FromBody] AuthorListModel model)
         {
             try
             {
-
-                var result = _authorService.GetAuthors(model.PageIndex, model.PageSize, model.FormatSortExpression("Name", "Biography", "Rating","Id" ), model.Search);
+                var (data, total, totalDisplay) = _authorService.GetAuthors(model.PageIndex, model.PageSize,
+                    model.FormatSortExpression("Name", "Biography", "Rating", "Id"), model.Search);
 
                 var authors = new
                 {
-                    recordsTotal = result.total,
-                    recordsFiltered = result.totalDisplay,
-                    data = (from record in result.data
+                    recordsTotal = total,
+                    recordsFiltered = totalDisplay,
+                    data = (from record in data
                             select new string[]
                             {
-                              HttpUtility.HtmlEncode(record.Name),
-                              HttpUtility.HtmlEncode(record.Biography),
-                            record.Rating.ToString(),
-                            record.Id.ToString()
+                                HttpUtility.HtmlEncode(record.Name),
+                                HttpUtility.HtmlEncode(record.Biography),
+                                record.Rating.ToString(),
+                                record.Id.ToString()
                             }).ToArray()
-
-
-
                 };
+
                 return Json(authors);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "There was a problem in getting authors");
-
                 return Json(DataTables.EmptyResult);
+            }
+        }
+
+
+         [HttpPost]
+        public async Task<JsonResult> GetAuthorJsonDataSPAsync([FromBody] AuthorListModel model)
+        {
+            try
+            {
+                var searchDto = _mapper.Map<AuthorSearchDto>(model.SearchItem);
+                var (data, total, totalDisplay) = await _authorService.GetAuthorsSP(
+                    model.PageIndex,
+                    model.PageSize,
+                    model.FormatSortExpression("Name", "Biography", "Rating", "Id"), searchDto);
+
+                var authors = new
+                {
+                    recordsTotal = total,
+                    recordsFiltered = totalDisplay,
+                    data = (from record in data
+                            select new string[]
+                            {
+                                HttpUtility.HtmlEncode(record.Name),
+                                HttpUtility.HtmlEncode(record.Biography),
+                                record.Rating.ToString(),
+                                record.Id.ToString()
+                            }).ToArray()
+                };
+
+                return Json(authors);
 
             }
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "There was a problem in getting authors");
+                return Json(DataTables.EmptyResult);
+            }
         }
 
 
