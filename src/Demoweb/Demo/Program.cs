@@ -5,9 +5,11 @@ using Demo.Application.Features.Books.Commands;
 using Demo.Data;
 using Demo.Infrastructure;
 using Demo.Models;
+using Demo.Infrastructure.Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
@@ -85,10 +87,10 @@ try
          options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
-    builder.Services.AddControllersWithViews();
-
+    #region Identity Configuration
+    builder.Services.AddIdentity();
+    #endregion
+    builder.Services.AddRazorPages();
 
     var app = builder.Build();
 

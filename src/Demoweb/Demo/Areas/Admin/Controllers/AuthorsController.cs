@@ -8,7 +8,6 @@ using Demo.Domaiin.Entities;
 using Demo.Domaiin.Services;
 using Demo.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Web;
